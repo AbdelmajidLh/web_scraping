@@ -4,18 +4,17 @@ import pandas as pd
 from time import sleep
 import os
 
+# insert the product name
+search_query = input('insert your product name :')
+
+search_query = search_query.replace(' ', '+')
+base_url = 'https://www.amazon.com/s?k={0}'.format(search_query)
+
+# user agent
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0',
     'Accept-Language': 'en-US, en;q=0.5'
 }
-
-# inserer le nom du produit
-search_query = input('Entrez le nom du produit :')
-
-
-search_query = search_query.replace(' ', '+')
-base_url = 'https://www.amazon.com/s?k={0}'.format(search_query)
-print(base_url)
 
 # disable your proxies in your requests
 proxies = {
@@ -23,7 +22,7 @@ proxies = {
   "https": None,
 }
 
-
+# save products in the items list
 items = []
 for i in range(1, 5):
     print('Processing {0}...'.format(base_url + '&page={0}'.format(i)))
@@ -55,12 +54,12 @@ for i in range(1, 5):
 # créer le dataframe
 df = pd.DataFrame(items, columns=['produit', 'note', 'nombre_de_notes', 'prix', 'lien produit'])
 
-# creer le repertoire resultst
+# create the RES directory if it doesn't ixist
 path = "RES"
 isExist = os.path.exists(path)
 if not isExist:
    # Create a new directory because it does not exist
    os.makedirs(path)
 
-# exporter les résultats
+ # export  results
 df.to_excel('{0}/{1}.xlsx'.format(path, search_query), index=False)
