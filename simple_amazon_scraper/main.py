@@ -12,7 +12,7 @@ headers = {
 search_query = input('Entrez le nom du produit :')
 
 
-search_query = 'winter jacket'.replace(' ', '+')
+search_query = search_query.replace(' ', '+')
 base_url = 'https://www.amazon.com/s?k={0}'.format(search_query)
 print(base_url)
 
