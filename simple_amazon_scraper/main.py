@@ -63,3 +63,6 @@ if not isExist:
 
  # export  results
 df.to_excel('{0}/{1}.xlsx'.format(path, search_query), index=False)
+
+"""adapted from : https://learndataanalysis.org/source-code-create-an-amazon-scraper-with-python/
+"""
