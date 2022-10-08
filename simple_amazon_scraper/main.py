@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from time import sleep
+import os
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0',
@@ -51,5 +52,15 @@ for i in range(1, 5):
             continue
     sleep(1.5)
     
-df = pd.DataFrame(items, columns=['product', 'rating', 'rating count', 'price', 'product url'])
-df.to_csv('{0}.csv'.format(search_query), index=False)
+# créer le dataframe
+df = pd.DataFrame(items, columns=['produit', 'note', 'nombre_de_notes', 'prix', 'lien produit'])
+
+# creer le repertoire resultst
+path = "RES"
+isExist = os.path.exists(path)
+if not isExist:
+   # Create a new directory because it does not exist
+   os.makedirs(path)
+
+# exporter les résultats
+df.to_excel('{0}/{1}.xlsx'.format(path, search_query), index=False)
